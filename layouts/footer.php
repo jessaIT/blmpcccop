@@ -231,6 +231,28 @@
                                 <label for="province">Province</label>
                                 <input type="text" class="form-control form-control" name="province" placeholder="Province" required>
                             </div>
+                            <div class="form-group">
+                                <label for="province">Region</label>
+                                <select id="region" name="region" class="form-control">
+                                    <option value="NCR">National Capital Region (NCR)</option>
+                                    <option value="CAR">Cordillera Administrative Region (CAR)</option>
+                                    <option value="Region 1">Ilocos Region (Region 1)</option>
+                                    <option value="Region 2">Cagayan Valley (Region 2)</option>
+                                    <option value="Region 3">Central Luzon (Region 3)</option>
+                                    <option value="Region 4A">CALABARZON (Region 4A)</option>
+                                    <option value="Region 4B">MIMAROPA (Region 4B)</option>
+                                    <option value="Region 5">Bicol Region (Region 5)</option>
+                                    <option value="Region 6">Western Visayas (Region 6)</option>
+                                    <option value="Region 7">Central Visayas (Region 7)</option>
+                                    <option value="Region 8">Eastern Visayas (Region 8)</option>
+                                    <option value="Region 9">Zamboanga Peninsula (Region 9)</option>
+                                    <option value="Region 10">Northern Mindanao (Region 10)</option>
+                                    <option value="Region 11">Davao Region (Region 11)</option>
+                                    <option value="Region 12">SOCCSKSARGEN (Region 12)</option>
+                                    <option value="CARAGA">CARAGA</option>
+                                    <option value="BARMM">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <script>

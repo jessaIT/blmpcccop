@@ -2,6 +2,9 @@
 session_start();
 include 'connection.php';
 
+require __DIR__ . '/vendor/autoload.php'; // Adjust the path as needed
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event_date = $_POST['event_date'];
     $outputDate = date('Y/m/d', strtotime($event_date));

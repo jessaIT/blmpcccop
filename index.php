@@ -331,6 +331,30 @@ if ($_SESSION["type"] == "super_admin") {
                                                                     <label for="province">Province</label>
                                                                     <input type="text" class="form-control form-control" name="province" value="<?= $row['province'] ?>" placeholder="Province">
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <label for="province">Region</label>
+                                                                    <select id="region" name="region" class="form-control">
+                                                                        <option <?= $row['region'] == "NCR" ? 'selected' : ''  ?> value="NCR">National Capital Region (NCR)</option>
+                                                                        <option <?= $row['region'] == "CAR" ? 'selected' : ''  ?> value="CAR">Cordillera Administrative Region (CAR)</option>
+                                                                        <option <?= $row['region'] == "Region 1" ? 'selected' : ''  ?> value="Region 1">Ilocos Region (Region 1)</option>
+                                                                        <option <?= $row['region'] == "Region 2" ? 'selected' : ''  ?> value="Region 2">Cagayan Valley (Region 2)</option>
+                                                                        <!-- Continue adding options as needed -->
+                                                                        <option <?= $row['region'] == "Region 3" ? 'selected' : ''  ?> value="Region 3">Central Luzon (Region 3)</option>
+                                                                        <option <?= $row['region'] == "Region 4A" ? 'selected' : ''  ?> value="Region 4A">CALABARZON (Region 4A)</option>
+                                                                        <option <?= $row['region'] == "Region 4B" ? 'selected' : ''  ?> value="Region 4B">MIMAROPA (Region 4B)</option>
+                                                                        <option <?= $row['region'] == "Region 5" ? 'selected' : ''  ?> value="Region 5">Bicol Region (Region 5)</option>
+                                                                        <option <?= $row['region'] == "Region 6" ? 'selected' : ''  ?> value="Region 6">Western Visayas (Region 6)</option>
+                                                                        <option <?= $row['region'] == "Region 7" ? 'selected' : ''  ?> value="Region 7">Central Visayas (Region 7)</option>
+                                                                        <option <?= $row['region'] == "Region 8" ? 'selected' : ''  ?> value="Region 8">Eastern Visayas (Region 8)</option>
+                                                                        <option <?= $row['region'] == "Region 9" ? 'selected' : ''  ?> value="Region 9">Zamboanga Peninsula (Region 9)</option>
+                                                                        <option <?= $row['region'] == "Region 10" ? 'selected' : ''  ?> value="Region 10">Northern Mindanao (Region 10)</option>
+                                                                        <option <?= $row['region'] == "Region 11" ? 'selected' : ''  ?> value="Region 11">Davao Region (Region 11)</option>
+                                                                        <option <?= $row['region'] == "Region 12" ? 'selected' : ''  ?> value="Region 12">SOCCSKSARGEN (Region 12)</option>
+                                                                        <option <?= $row['region'] == "CARAGA" ? 'selected' : ''  ?> value="CARAGA">CARAGA</option>
+                                                                        <option <?= $row['region'] == "BARMM" ? 'selected' : ''  ?> value="BARMM">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                                                                    </select>
+
+                                                                </div>
                                                             </div>
                                                         </div>
 

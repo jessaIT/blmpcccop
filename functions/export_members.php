@@ -1,23 +1,42 @@
 <?php
+
 session_start();
 include('connection.php');
 
-if (isset($_GET['type']) && $_GET['type'] === 'excel') {
-    $sql = "SELECT `id`, `firstname`, `middlename`, `lastname`, `extension`, `dob`, `age`, `pob`, `civil_status`, `tin`, `mobile_number`, `email`, `zone`, `brgy`, `municipality`, `province`, `status` FROM `members_tbl` WHERE 1";
-    $result = $conn->query($sql);
-    
-    $csvData = "BLMPC Members\n";
-    $csvData .= "ID,First Name,Middle Name,Last Name,Extension,Date of Birth,Age,Place of Birth,Civil Status,TIN,Mobile Number,Email, Zone,Barangay,Municipality,Province,Status\n"; // Column headers
-    while ($row = $result->fetch_assoc()) {
-        $csvData .= "{$row['id']},{$row['firstname']},{$row['middlename']},{$row['lastname']},{$row['extension']},{$row['dob']},{$row['age']},{$row['pob']},{$row['civil_status']},{$row['tin']},{$row['mobile_number']},{$row['email']},{$row['zone']},{$row['brgy']},{$row['municipality']},{$row['province']},{$row['status']}\n";
-    }
-    
-    header('Content-Type: text/csv');
-    $filename = "BLMPC-MembersGenerated_" . date('Y-m-d') . ".csv";
-    header('Content-Disposition: attachment; filename="' . $filename . '"');
-    echo $csvData;
-    exit;
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
+// Perform the query
+$query = "SELECT `id`, `mem_id`, `firstname`, `middlename`, `lastname`, `extension`, `dob`, `age`, `pob`, `civil_status`, `tin`, `mobile_number`, `email`, `zone`, `brgy`, `municipality`, `province`, `region`, `image_path`, `status` FROM `members_tbl` WHERE 1";
+
+$result = $conn->query($query);
+
+// Check if the query was successful
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
+
+// Set the CSV header
+header('Content-Type: text/csv');
+header('Content-Disposition: attachment; filename="members_export.csv"');
+
+// Create a file pointer connected to the output stream
+$output = fopen('php://output', 'w');
+
+// Output the column headings
+fputcsv($output, array('id', 'mem_id', 'firstname', 'middlename', 'lastname', 'extension', 'dob', 'age', 'pob', 'civil_status', 'tin', 'mobile_number', 'email', 'zone', 'brgy', 'municipality', 'province', 'region', 'image_path', 'status'));
+
+// Output the data
+while ($row = $result->fetch_assoc()) {
+    fputcsv($output, $row);
+}
+
+// Close the database connection
 $conn->close();
+
+// Close the file pointer
+fclose($output);
+
 ?>

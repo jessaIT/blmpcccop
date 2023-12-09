@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $brgy = $_POST['brgy'];
     $municipality = $_POST['municipality'];
     $province = $_POST['province'];
+    $region = $_POST['region'];
     $status = $_POST['status'];
 
     if (!empty($_FILES['image']['name'])) {
@@ -45,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['error'] = "Invalid image format. Allowed formats: JPG, JPEG, PNG, GIF.";
         }
     } else {
-        $sql = "UPDATE `members_tbl` SET `firstname`='$firstname',`middlename`='$middlename',`lastname`='$lastname',`extension`='$extension',`dob`='$dob',`age`='$age',`pob`='$pob',`civil_status`='$civil_status',`tin`='$tin',`mobile_number`='$mobile_number',`email`='$email', `zone`='$zone',`brgy`='$brgy',`municipality`='$municipality',`province`='$province', `status`='$status' WHERE id = $member_id";
+        $sql = "UPDATE `members_tbl` SET `firstname`='$firstname',`middlename`='$middlename',`lastname`='$lastname',`extension`='$extension',`dob`='$dob',`age`='$age',`pob`='$pob',`civil_status`='$civil_status',`tin`='$tin',`mobile_number`='$mobile_number',`email`='$email', `zone`='$zone',`brgy`='$brgy',`municipality`='$municipality',`province`='$province',`region`='$region', `status`='$status' WHERE id = $member_id";
 
         if ($conn->query($sql) === TRUE) {
             $_SESSION['success'] = "Member details have been updated!";

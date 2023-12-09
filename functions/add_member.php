@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $brgy = mysqli_real_escape_string($conn, $_POST['brgy']);
     $municipality = mysqli_real_escape_string($conn, $_POST['municipality']);
     $province = mysqli_real_escape_string($conn, $_POST['province']);
+    $region = mysqli_real_escape_string($conn, $_POST['region']);
 
     if (empty($firstname) || empty($lastname) || empty($dob) || empty($mobile_number) || empty($email)) {
         $_SESSION['error'] = "Please fill in all required fields.";
@@ -53,8 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $imageFile = $uploadDir . uniqid() . '.' . $imageFileType;
                         
                         if (move_uploaded_file($imageTmpName, $imageFile)) {
-                            $sql = "INSERT INTO members_tbl (mem_id, firstname, middlename, lastname, extension, dob, age, pob, civil_status, tin, mobile_number, email, zone, brgy, municipality, province, image_path) 
-                                    VALUES ('$mem_id', '$firstname', '$middlename', '$lastname', '$extension', '$dob', '$age', '$pob', '$civil_status', '$tin', '$mobile_number', '$email', '$zone', '$brgy', '$municipality', '$province', '$imageFile')";
+                            $sql = "INSERT INTO members_tbl (mem_id, firstname, middlename, lastname, extension, dob, age, pob, civil_status, tin, mobile_number, email, zone, brgy, municipality, province, region, image_path) 
+                                    VALUES ('$mem_id', '$firstname', '$middlename', '$lastname', '$extension', '$dob', '$age', '$pob', '$civil_status', '$tin', '$mobile_number', '$email', '$zone', '$brgy', '$municipality', '$province', '$region', '$imageFile')";
                         
                             if ($conn->query($sql) === TRUE) {
                                 $_SESSION['success'] = "New Member Added!";
