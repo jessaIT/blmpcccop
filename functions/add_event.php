@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                             if ($event) {
-                                $_SESSION['success'] .= " Event added to Google Calendar! " . $event->htmlLink . $notify;
+                                $_SESSION['success'] .= " Event added to Google Calendar";
                             } else {
                                 $_SESSION['error'] = "Error creating event in Google Calendar.";
                             }

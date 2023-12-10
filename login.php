@@ -136,7 +136,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="g-recaptcha" data-sitekey="6LcAEQIjAAAAAEoRxOki-nzj4FePO4lv-R5IlRV1"></div>
+                                        <!-- <div class="g-recaptcha" data-sitekey="6LcAEQIjAAAAAEoRxOki-nzj4FePO4lv-R5IlRV1"></div> -->
+                                        <div class="g-recaptcha" data-sitekey="6LdDeiwpAAAAAM0rCW6Wk3UbcLBsfiD8ZU7STC1V"></div>
                                         <div id="captcha-error" class="text-danger"></div>
                                     </div>
 

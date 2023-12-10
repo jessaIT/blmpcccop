@@ -67,8 +67,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="newMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade add_member" id="newMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add member</h5>
@@ -80,18 +80,7 @@
 
             <div class="modal-body">
                 <form class="user" method="post" action="./functions/add_member.php" enctype="multipart/form-data">
-                    <!-- <div class="row">
-                                                                    <div class="col-6 mx-auto">
-                                                                        <div class="input-group mb-3">
-                                                                            <input type="file" class="form-control" id="image" name="image" class="image">
 
-
-                                                                        </div>
-                                                                        <div id="imagePreview" class="col-md-12 col-12 mx-auto  ">
-                                                                            <img src="img/undraw_profile_2.svg" width="200" alt="Image Preview">
-                                                                        </div>
-                                                                    </div>
-                                                                </div> -->
 
                     <div class="row py-4">
                         <div class="col-lg-6 mx-auto">
@@ -147,15 +136,15 @@
                             <p class="text-success small h5">Name</p>
                             <div class="form-group">
                                 <label for="firstname">Firstname</label>
-                                <input type="text" class="form-control form-control" id="firstname" name="firstname" placeholder="Juan" required>
+                                <input type="text" class="form-control" name="firstname" placeholder="Juan" required>
                             </div>
                             <div class="form-group">
                                 <label for="middlename">Middle Name</label>
-                                <input type="text" class="form-control form-control" name="middlename" placeholder="Mendez" required>
+                                <input type="text" class="form-control" name="middlename" placeholder="Mendez" required>
                             </div>
                             <div class="form-group">
                                 <label for="lastname">Lastname</label>
-                                <input type="text" class="form-control form-control" id="lastname" name="lastname" placeholder="Dela Cruz" required>
+                                <input type="text" class="form-control" name="lastname" placeholder="Dela Cruz" required>
                             </div>
                             <div class="form-group">
                                 <label for="extension">Suffix</label>
@@ -175,16 +164,16 @@
                             <p class="text-success small h5">Basic Information</p>
                             <div class="form-group">
                                 <label for="dob">Date of Birth</label>
-                                <input type="date" class="form-control form-control" id="dob" name="dob" required>
+                                <input type="date" class="form-control" name="dob" required>
                             </div>
                             <div class="form-group">
                                 <label for="age">Age</label>
-                                <input type="number" class="form-control form-control" name="age" required>
+                                <input type="number" class="form-control" name="age" required>
                             </div>
                             <div class="form-group">
                                 <label for="pob">Place of Birth</label>
 
-                                <textarea name="pob" id="pob" cols="10" rows="4" class="form-control" placeholder="Place of Birth" required></textarea>
+                                <textarea name="pob" cols="10" rows="4" class="form-control" placeholder="Place of Birth" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="civil-status">Civil Status</label>
@@ -198,7 +187,7 @@
 
                             <div class="form-group">
                                 <label for="tin">TIN</label>
-                                <input type="text" class="form-control form-control" id="tin" name="tin" aria-describedby="emailHelp" placeholder="TIN number" required>
+                                <input type="text" class="form-control" name="tin" aria-describedby="emailHelp" placeholder="TIN number" required>
                             </div>
                         </div>
 
@@ -206,55 +195,42 @@
                             <p class="text-success small h5 mb-6">Contact Information</p>
                             <div class="form-group">
                                 <label for="mobile-number">Mobile Number</label>
-                                <input type="text" class="form-control form-control" id="mobile-number" name="mobile-number" placeholder="Mobile" required>
+                                <input type="text" class="form-control" number" name="mobile-number" placeholder="Mobile" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email Address</label>
-                                <input type="email" class="form-control form-control" name="email" placeholder="Email Address" required>
+                                <input type="email" class="form-control" name="email" placeholder="Email Address" required>
                             </div>
 
 
-                            <p class="text-success small h5 mt-3">Address</p>
+                            <p class="text-success h5 mt-3">Address</p>
                             <div class="form-group">
-                                <label for="zone">Zone</label>
-                                <input type="text" class="form-control form-control" id="zone" name="zone" placeholder="Zone (Purok)" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="brgy">Barangay</label>
-                                <input type="text" class="form-control form-control" name="brgy" placeholder="Barangay" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="municipality">Municipality</label>
-                                <input type="text" class="form-control form-control" name="municipality" placeholder="Municipality" required>
+                                <label for="province">Region</label>
+                                <select name="region" class="form-control">
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="province">Province</label>
-                                <input type="text" class="form-control form-control" name="province" placeholder="Province" required>
+                                <!-- <input type="text" class="form-control" name="province" placeholder="Province"> -->
+                                <select name="province" class="form-control"></select>
                             </div>
                             <div class="form-group">
-                                <label for="province">Region</label>
-                                <select id="region" name="region" class="form-control">
-                                    <option value="NCR">National Capital Region (NCR)</option>
-                                    <option value="CAR">Cordillera Administrative Region (CAR)</option>
-                                    <option value="Region 1">Ilocos Region (Region 1)</option>
-                                    <option value="Region 2">Cagayan Valley (Region 2)</option>
-                                    <option value="Region 3">Central Luzon (Region 3)</option>
-                                    <option value="Region 4A">CALABARZON (Region 4A)</option>
-                                    <option value="Region 4B">MIMAROPA (Region 4B)</option>
-                                    <option value="Region 5">Bicol Region (Region 5)</option>
-                                    <option value="Region 6">Western Visayas (Region 6)</option>
-                                    <option value="Region 7">Central Visayas (Region 7)</option>
-                                    <option value="Region 8">Eastern Visayas (Region 8)</option>
-                                    <option value="Region 9">Zamboanga Peninsula (Region 9)</option>
-                                    <option value="Region 10">Northern Mindanao (Region 10)</option>
-                                    <option value="Region 11">Davao Region (Region 11)</option>
-                                    <option value="Region 12">SOCCSKSARGEN (Region 12)</option>
-                                    <option value="CARAGA">CARAGA</option>
-                                    <option value="BARMM">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
-                                </select>
+                                <label for="municipality">Municipality</label>
+                                <!-- <input type="text" class="form-control" name="municipality" placeholder="Municipality"> -->
+                                <select class="form-control" name="municipality"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="brgy">Barangay</label>
+                                <!-- <input type="text" class="form-control" name="brgy" placeholder="Barangay"> -->
+                                <select class="form-control" name="brgy"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="zone">Zone</label>
+                                <input type="text" class="form-control" name="zone" placeholder="Zone">
                             </div>
                         </div>
                     </div>
+
                     <script>
                         document.getElementById('image').addEventListener('change', function(e) {
                             const imagePreview = document.getElementById('imagePreview');
@@ -301,15 +277,15 @@
                             <p class="text-success small h5">Email Address</p>
                             <div class="form-group">
                                 <label for="email_address">Firstname</label>
-                                <input type="email" class="form-control form-control" id="email" name="email_address" placeholder="jdl@gmail.com" required>
+                                <input type="email" class="form-control" id="email" name="email_address" placeholder="jdl@gmail.com" required>
                             </div>
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input type="text" class="form-control form-control" name="username" placeholder="jdl_cruz" required>
+                                <input type="text" class="form-control" name="username" placeholder="jdl_cruz" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control form-control" id="password" name="password" required>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="form-group">
                                 <label for="extension">Suffix</label>
@@ -392,19 +368,19 @@
                         <p class="text-success h5">Personal Details</p>
                         <div class="form-group">
                             <label for="firstname">Firstname</label>
-                            <input type="text" readonly class="form-control form-control" id="firstname" value="<?= $row['firstname'] ?>" name="firstname" placeholder="First Name">
+                            <input type="text" readonly class="form-control" id="firstname" value="<?= $row['firstname'] ?>" name="firstname" placeholder="First Name">
                         </div>
                         <div class="form-group">
                             <label for="middlename">Middle Name</label>
-                            <input type="text" readonly class="form-control form-control" name="middlename" value="<?= $row['middlename'] ?>" placeholder="Middle Name">
+                            <input type="text" readonly class="form-control" name="middlename" value="<?= $row['middlename'] ?>" placeholder="Middle Name">
                         </div>
                         <div class="form-group">
                             <label for="lastname">Lastname</label>
-                            <input type="text" readonly class="form-control form-control" id="lastname" value="<?= $row['lastname'] ?>" name="lastname" placeholder="Last Name">
+                            <input type="text" readonly class="form-control" id="lastname" value="<?= $row['lastname'] ?>" name="lastname" placeholder="Last Name">
                         </div>
                         <div class="form-group">
                             <label for="extension">Extension</label>
-                            <input type="text" readonly class="form-control form-control" id="extension" name="extension" aria-describedby="emailHelp" value="<?= $row['extension'] ?>" placeholder="Extension (ex. Jr.)">
+                            <input type="text" readonly class="form-control" id="extension" name="extension" aria-describedby="emailHelp" value="<?= $row['extension'] ?>" placeholder="Extension (ex. Jr.)">
                         </div>
 
 
@@ -414,24 +390,24 @@
                         <p class="text-success h5">Basic Information</p>
                         <div class="form-group">
                             <label for="dob">Date of Birth</label>
-                            <input type="text" readonly class="form-control form-control" id="dob" value="<?= $row['dob'] ?>" name="dob">
+                            <input type="text" readonly class="form-control" id="dob" value="<?= $row['dob'] ?>" name="dob">
                         </div>
                         <div class="form-group">
                             <label for="age">Age</label>
-                            <input type="number" readonly class="form-control form-control" name="age" value="<?= $row['age'] ?>">
+                            <input type="number" readonly class="form-control" name="age" value="<?= $row['age'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="pob">Place of Birth</label>
-                            <input type="text" readonly class="form-control form-control" id="pob" value="<?= $row['pob'] ?>" name="pob" placeholder="Place of Birth">
+                            <input type="text" readonly class="form-control" id="pob" value="<?= $row['pob'] ?>" name="pob" placeholder="Place of Birth">
                         </div>
                         <div class="form-group">
                             <label for="civil-status">Civil Status</label>
-                            <input type="text" readonly class="form-control form-control" id="civil-status" name="civil-status" aria-describedby="emailHelp" value="<?= $row['civil_status'] ?>" placeholder="Civil Status">
+                            <input type="text" readonly class="form-control" id="civil-status" name="civil-status" aria-describedby="emailHelp" value="<?= $row['civil_status'] ?>" placeholder="Civil Status">
                         </div>
 
                         <div class="form-group">
                             <label for="tin">TIN</label>
-                            <input type="text" readonly class="form-control form-control" id="tin" name="tin" aria-describedby="emailHelp" value="<?= $row['tin'] ?>" placeholder="TIN number">
+                            <input type="text" readonly class="form-control" id="tin" name="tin" aria-describedby="emailHelp" value="<?= $row['tin'] ?>" placeholder="TIN number">
                         </div>
                     </div>
 
@@ -439,11 +415,11 @@
                         <p class="text-success h5 mb-6">Contact Information</p>
                         <div class="form-group">
                             <label for="mobile-number">Mobile Number</label>
-                            <input type="text" readonly class="form-control form-control" id="mobile-number" value="<?= $row['mobile_number'] ?>" name="mobile-number" placeholder="First Name">
+                            <input type="text" readonly class="form-control" id="mobile-number" value="<?= $row['mobile_number'] ?>" name="mobile-number" placeholder="First Name">
                         </div>
                         <div class="form-group">
                             <label for="email">Email Address</label>
-                            <input type="email" readonly class="form-control form-control" name="email" value="<?= $row['email'] ?>" placeholder="Email Address">
+                            <input type="email" readonly class="form-control" name="email" value="<?= $row['email'] ?>" placeholder="Email Address">
                         </div>
 
 
@@ -451,15 +427,19 @@
 
                         <div class="form-group">
                             <label for="brgy">Barangay</label>
-                            <input type="text" readonly class="form-control form-control" name="brgy" value="<?= $row['brgy'] ?>" placeholder="Barangay">
+                            <input type="text" readonly class="form-control" name="brgy" value="<?= $row['brgy'] ?>" placeholder="Barangay">
                         </div>
                         <div class="form-group">
                             <label for="municipality">Municipality</label>
-                            <input type="text" readonly class="form-control form-control" name="municipality" value="<?= $row['municipality'] ?>" placeholder="Municipality">
+                            <input type="text" readonly class="form-control" name="municipality" value="<?= $row['municipality'] ?>" placeholder="Municipality">
                         </div>
                         <div class="form-group">
                             <label for="province">Province</label>
-                            <input type="text" readonly class="form-control form-control" name="province" value="<?= $row['province'] ?>" placeholder="Province">
+                            <input type="text" readonly class="form-control" name="province" value="<?= $row['province'] ?>" placeholder="Province">
+                        </div>
+                        <div class="form-group">
+                            <label for="region">Region</label>
+                            <input type="text" readonly class="form-control" name="region" value="<?= $row['region'] ?>" placeholder="region">
                         </div>
                     </div>
                 </div>
@@ -512,7 +492,151 @@
 <script src="./vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="./js/sb-admin-2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
 
+        var dob = $('.add_member input[name=dob]');
+        var edit_dob = $('.edit input[name=dob]');
+
+        var age = $('.add_member input[name=age]');
+        var edit_age = $('.edit input[name=age]');
+
+        dob.on('change', function() {
+            calculateAge($(this), age);
+        });
+
+        edit_dob.on('change', function() {
+            calculateAge($(this), edit_age);
+        });
+
+
+        function calculateAge(dobElement, ageElement) {
+            // Get the birthdate input value
+            var birthdateInput = dobElement.val();
+
+            // Create a Date object from the input value
+            var birthdate = new Date(birthdateInput);
+
+            // Get the current date
+            var currentDate = new Date();
+
+            // Calculate the age
+            var age = currentDate.getFullYear() - birthdate.getFullYear();
+
+            // Check if birthday has occurred this year
+            if (currentDate.getMonth() < birthdate.getMonth() || (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) {
+                age--;
+            }
+
+
+            // Set the age field value
+            ageElement.val(age);
+        }
+    });
+
+    $(document).ready(function() {
+        var jsonData;
+
+        // Load JSON data from external file
+        $.getJSON('../blmpccoop/functions/config/address.json', function(data) {
+            jsonData = data;
+
+
+            // Populate region dropdown
+            populateDropdown('.add_member', 'select[name=region]', Object.keys(jsonData));
+
+            // Handle region change
+            $('.add_member select[name="region"]').change(function() {
+                var selectedRegion = $(this).val();
+                var provinces = jsonData[selectedRegion].province_list;
+                populateDropdown('.add_member', 'select[name=province]', Object.keys(provinces));
+            });
+
+            // Handle province change
+            $('.add_member select[name="province"]').change(function() {
+                var selectedRegion = $('.add_member select[name="region"]').val();
+                var selectedProvince = $(this).val();
+                var municipalitiesObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list;
+
+                var municipalities = Object.values(municipalitiesObject).map(obj => Object.keys(obj)[0]);
+
+                console.log(municipalities);
+
+                populateDropdown('.add_member', 'select[name=municipality]', municipalities);
+            });
+
+            // Handle municipality change
+            $('.add_member select[name="municipality"]').change(function() {
+                var selectedRegion = $('.add_member select[name="region"]').val();
+                var selectedProvince = $('.add_member select[name="province"]').val();
+                var selectedMunicipality = $(this).val();
+
+                // Find the municipality object in the array
+                var municipalityObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list.find(obj => Object.keys(obj)[0] === selectedMunicipality);
+
+                if (municipalityObject) {
+                    var barangays = municipalityObject[selectedMunicipality].barangay_list;
+
+                    // Populate barangay dropdown
+                    populateDropdown('.add_member', 'select[name=brgy]', barangays);
+                }
+            });
+
+
+            // Populate region dropdown
+            populateDropdown('.edit', 'select[name=region]', Object.keys(jsonData));
+
+            // Handle region change
+            $('.edit select[name="region"]').change(function() {
+                var selectedRegion = $(this).val();
+                var provinces = jsonData[selectedRegion].province_list;
+                populateDropdown('.edit', 'select[name=province]', Object.keys(provinces));
+            });
+
+            // Handle province change
+            $('.edit select[name="province"]').change(function() {
+                var selectedRegion = $('.edit select[name="region"]').val();
+                var selectedProvince = $(this).val();
+                var municipalitiesObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list;
+
+                var municipalities = Object.values(municipalitiesObject).map(obj => Object.keys(obj)[0]);
+
+                console.log(municipalities);
+
+                populateDropdown('.edit', 'select[name=municipality]', municipalities);
+            });
+
+            // Handle municipality change
+            $('.edit select[name="municipality"]').change(function() {
+                var selectedRegion = $('.edit select[name="region"]').val();
+                var selectedProvince = $('.edit select[name="province"]').val();
+                var selectedMunicipality = $(this).val();
+
+                // Find the municipality object in the array
+                var municipalityObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list.find(obj => Object.keys(obj)[0] === selectedMunicipality);
+
+                if (municipalityObject) {
+                    var barangays = municipalityObject[selectedMunicipality].barangay_list;
+
+                    // Populate barangay dropdown
+                    populateDropdown('.edit', 'select[name=brgy]', barangays);
+                }
+            });
+        });
+
+        // Function to populate a dropdown
+        function populateDropdown(parentElement, dropdownElement, values) {
+            var dropdown = $(parentElement + ' ' + dropdownElement);
+
+            dropdown.empty();
+
+            $.each(values, function(index, value) {
+                dropdown.append('<option value="' + value + '">' + value + '</option>');
+            });
+        }
+
+    });
+</script>
 </body>
 
 </html>

@@ -53,7 +53,7 @@ $username = $_SESSION["username"];
 
     <div class="row">
         <div class="col-6 g-2 mt-3 py-3">
-            <div class="events-container" style="height: 700px; overflow-y: auto;">
+            <div class="events-container" style="height: 800px; overflow-y: auto;">
 
                 <?php
                 include('functions/connection.php');
@@ -78,16 +78,13 @@ $username = $_SESSION["username"];
                 ?>
                 <!-- grouping the events based on months -->
                 <?php foreach ($eventsByMonth as $month => $events) : ?>
-                    <div class="month-card" style="padding: 20px; margin: 10px; border-radius: 20px;">
+                    <div class="month-card my-4">
                         <h5 class="text-dark text-uppercase">Events & activities for <span class="text-dark"><?= $month ?></span></h5>
 
                         <?php foreach ($events as $event) : ?>
-                            <div class="card mb-2">
-                                <div class="col-11 m-3">
-
-                                </div>
-                                <div class="card-body mx-auto">
-                                    <img src="functions/<?php echo $event['image_path']; ?>" class="img col-12 d-block mx-auto mb-3 " style="width: 600px; height: 120px;" alt="Member Image">
+                            <div class="card my-4">
+                                <div class="card-body">
+                                    <img src="functions/<?php echo $event['image_path']; ?>" class="img d-block mb-4" style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;" alt="Member Image">
                                     <h4 class="card-title text-dark" style="font-weight: bold;"><?= $event['event_name'] ?></h4>
                                     <i class="fa-solid fa-notes"></i>
                                     <div class="row">
@@ -126,15 +123,15 @@ $username = $_SESSION["username"];
         <div class="col-6 mb-4 g-2">
             <div class="row">
                 <div class="row col-xl-6 col-md-12 mb-2 align-items-start">
-                    <div class="col-1">
-                        <a href="announcement.php" class="btn btn-md btn-success mr-3" data-toggle="modal" data-target="#sendAnnouncementModal" title="Send announcement"><i class="fa-solid fa-comment-dots"></i></a>
+                    <!-- <div class="col-1"> -->
+                        <!-- <a href="announcement.php" class="btn btn-md btn-success mr-3" data-toggle="modal" data-target="#sendAnnouncementModal" title="Send announcement"><i class="fa-solid fa-comment-dots"></i></a> -->
+                    <!-- </div> -->
+
+                    <div class="col-auto">
+                        <a href="#" class="btn btn-md mb-4 d-flex align-items-center w-auto gap-2" style="background-color: orangered; color: #fff;" data-toggle="modal" data-target="#addEventModal" title="New Event"><i class="fa-solid fa-plus"></i> Add Event </a>
                     </div>
 
-                    <div class="col-1 ml-3">
-                        <a href="#" class="btn btn-md mb-4" style="background-color: orangered; color: #fff;" data-toggle="modal" data-target="#addEventModal" title="New Event"><i class="fa-solid fa-plus"></i></a>
-                    </div>
-
-                    <a href="#" class="mb-1 mt-0 small" data-toggle="modal" data-target="#sms_logs" title="View sms logs">VIEW SMS LOGS</a>
+                    <!-- <a href="#" class="mb-1 mt-0 small" data-toggle="modal" data-target="#sms_logs" title="View sms logs">VIEW SMS LOGS</a> -->
 
                 </div>
                 <div class="card border-left-dark shadow h-100 col-xl-12 col-md-12 col-12">

@@ -2,44 +2,77 @@
 session_start();
 include('connection.php');
 
-// Import function
-function importCSV($filePath, $conn)
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Function to sanitize input data
+function sanitize($data)
 {
-    // Check if the file exists
-    if (!file_exists($filePath)) {
-        return false;
-    }
+    global $conn;
+    return $conn->real_escape_string($data);
+}
+
+$failedRows = [];
+
+// Check if a file was uploaded
+if (isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0) {
+    $file = $_FILES['csv_file']['tmp_name'];
 
     // Open the file for reading
-    $file = fopen($filePath, 'r');
-
-    // Skip the first line (header)
-    fgetcsv($file);
+    $handle = fopen($file, "r");
 
     $lastMemId = null;
+    $isFirstRow = true;
 
-    // Read data from the file and insert into the database
-    while (($data = fgetcsv($file)) !== false) {
+    // Loop through the file line by line
+    while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+        if ($isFirstRow) {
+            $isFirstRow = false;
+            continue;
+        }
  
+        // Sanitize the data
+        $id = sanitize($data[0]);
+        $mobile_number = sanitize($data[11]);
+        $email = sanitize($data[12]);
 
-        $id = $data[0];
-        $firstname = $data[1];
-        $middlename = $data[2];
-        $lastname = $data[3];
-        $extension = $data[4];
-        $dob = $data[5];
-        $age = $data[6];
-        $pob = $data[7];
-        $civil_status = $data[8];
-        $tin = $data[9];
-        $mobile_number = $data[10];
-        $email = $data[11];
-        $zone = $data[12];
-        $brgy = $data[13];
-        $municipality = $data[14];
-        $province = $data[15];
-        $status = $data[16]; 
-        $image_path = '';
+        // Check if a member with the same ID, mobile_number, or email already exists
+        $checkExistingStmt = $conn->prepare("SELECT COUNT(*) FROM members_tbl WHERE id = ? OR mobile_number = ? OR email = ?");
+        $checkExistingStmt->bind_param("sss", $id, $mobile_number, $email);
+        $checkExistingStmt->execute();
+        $checkExistingStmt->bind_result($count);
+        $checkExistingStmt->fetch();
+        $checkExistingStmt->close();
+
+        // If a member with the same ID already exists, skip insertion
+        if ($count > 0) {
+            $failedRows[] = $data;
+            continue;
+        }
+
+        // Sanitize the data
+        $id = sanitize($data[0]);
+        $mem_id = sanitize($data[1]);
+        $firstname = sanitize($data[2]);
+        $middlename = sanitize($data[3]);
+        $lastname = sanitize($data[4]);
+        $extension = sanitize($data[5]);
+        $dob = sanitize($data[6]);
+        $age = sanitize($data[7]);
+        $pob = sanitize($data[8]);
+        $civil_status = sanitize($data[9]);
+        $tin = sanitize($data[10]);
+        $mobile_number = sanitize($data[11]);
+        $email = sanitize($data[12]);
+        $zone = sanitize($data[13]);
+        $brgy = sanitize($data[14]);
+        $municipality = sanitize($data[15]);
+        $province = sanitize($data[16]);
+        $region = sanitize($data[17]);
+        $image_path = sanitize($data[18]);
+        $status = sanitize($data[19]);
 
         // Get the last entry's mem_id
         $getLastIdStmt = $conn->prepare("SELECT MAX(mem_id) FROM members_tbl");
@@ -49,39 +82,42 @@ function importCSV($filePath, $conn)
         $getLastIdStmt->close();
 
         // Increment the last mem_id for the new entry
-        $mem_id = $lastMemId !== null ? $lastMemId + 1 : 1;
+        $mem_id = $lastMemId !== null ? (int)$lastMemId + 1 : 1;
 
-        // Use prepared statements to prevent SQL injection
-        $stmt = $conn->prepare("INSERT INTO `members_tbl` (`id`, `mem_id`, `firstname`, `middlename`, `lastname`, `extension`, `dob`, `age`, `pob`, `civil_status`, `tin`, `mobile_number`, `email`, `zone`, `brgy`, `municipality`, `province`, `region`, `image_path`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // Insert data into the database
+        $query = "INSERT INTO `members_tbl` (`id`, `mem_id`, `firstname`, `middlename`, `lastname`, `extension`, `dob`, `age`, `pob`, `civil_status`, `tin`, `mobile_number`, `email`, `zone`, `brgy`, `municipality`, `province`, `region`, `image_path`, `status`) 
+                    VALUES ('$id', '$mem_id', '$firstname', '$middlename', '$lastname', '$extension', '$dob', '$age', '$pob', '$civil_status', '$tin', '$mobile_number', '$email', '$zone', '$brgy', '$municipality', '$province', '$region', '$image_path', '$status')";
 
-
-        $stmt->bind_param("sssssssssssssssssss", $id, $mem_id, $firstname, $middlename, $lastname, $extension, $dob, $age, $pob, $civil_status, $tin, $mobile_number, $email, $zone, $brgy, $municipality, $province, $image_path, $status);
-
-        $stmt->execute(); 
-        $stmt->close();
+        try {
+            $result = $conn->query($query);
+            if (!$result) {
+                throw new Exception("Query failed: " . $conn->error);
+            }
+        } catch (mysqli_sql_exception $ex) {
+            // Handle duplicate entry error
+            header('Location: ../index.php?error=1');
+            $_SESSION['error'] = "Importing members run failed! Duplicate entry found.";
+            exit;
+        }
     }
 
-    // Close the file
-    fclose($file);
+    // Close the file handle
+    fclose($handle);
+    // Append failed rows to the session
+    $_SESSION['failedRows'] = $failedRows;
 
-    return true;
-}
-
-// Example usage
-if (isset($_FILES['csv_file'])) {
-    $fileTmpPath = $_FILES['csv_file']['tmp_name'];
-
-    if (importCSV($fileTmpPath, $conn)) {
+    // Check if there were any failed rows
+    if (!empty($failedRows)) {
+        header('Location: ../index.php?error=1');
+        $_SESSION['success'] = "Importing members run partially failed! Duplicate entries found in some rows.";
+        exit;
+    } else {
         header('Location: ../index.php?success=1');
         $_SESSION['success'] = "Importing members run successfully!";
         exit;
-    } else {
-        header('Location: ../index.php?error=1');
-        $_SESSION['error'] = "Importing members run failed!";
-        exit;
     }
-
+} else {
+    header('Location: ../index.php?error=1');
+    $_SESSION['error'] = "Importing members run failed!";
+    exit;
 }
-
-$conn->close();
-?>

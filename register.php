@@ -160,7 +160,7 @@
                                         <?php } ?>
                                     });
                                 </script>
-                                
+
                                 <form class="user" action="./functions/register.php" method="POST">
                                     <h5 class="mt-1 mb-1 text-center">New Admin</h5>
                                     <p class="mb-1 mt-2 text-success">Note: <span class="small text-dark">This admin account creation only allows one account, please do remember your credentials!</span></p>
@@ -188,7 +188,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="g-recaptcha" data-sitekey="6LcAEQIjAAAAAEoRxOki-nzj4FePO4lv-R5IlRV1"></div>
+                                        <!-- <div class="g-recaptcha" data-sitekey="6LcAEQIjAAAAAEoRxOki-nzj4FePO4lv-R5IlRV1"></div> -->
+                                        <div class="g-recaptcha" data-sitekey="6LdDeiwpAAAAAM0rCW6Wk3UbcLBsfiD8ZU7STC1V"></div>
                                         <div id="captcha-error" class="text-danger"></div>
                                     </div>
 

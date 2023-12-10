@@ -133,7 +133,7 @@ if ($_SESSION["type"] == "super_admin") {
                                 <?php while ($row = $result->fetch_assoc()) : ?>
                                     <tr>
                                         <td class="text-center"><b class="text-dark"><?= $row['mem_id'] ?></b></td>
-                                        <td class="text-center"><img src="functions/<?php echo $row['image_path']; ?>" width="50" class="img" alt="Member Image"></td>
+                                        <td class="text-center"><img src="<?= $row['image_path'] != '' ? "functions/" . $row['image_path'] : 'img/default-avatar.png' ?>" width="50" class="img" alt="Member Image"></td>
                                         <td class="text-center"><?= $row['lastname'] ?>, <?= $row['firstname'] ?> <?= $row['middlename'] ?></td>
                                         <td class="text-center"><?= $row['age'] ?></td>
                                         <td class="text-center"><?= $row['mobile_number'] ?></td>
@@ -167,8 +167,8 @@ if ($_SESSION["type"] == "super_admin") {
 
 
                                     <!-- Update Member Modal -->
-                                    <div class="modal fade" id="updateModal<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal fade edit" id="updateModal<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">UPDATE MEMBER</h5>
@@ -246,7 +246,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 <p class="text-dark small h5">Personal Details</p>
                                                                 <div class="form-group">
                                                                     <label for="firstname">Firstname</label>
-                                                                    <input type="text" class="form-control form-control" id="firstname" value="<?= $row['firstname'] ?>" name="firstname" placeholder="First Name">
+                                                                    <input type="text" class="form-control form-control" value="<?= $row['firstname'] ?>" name="firstname" placeholder="First Name">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="middlename">Middle Name</label>
@@ -254,7 +254,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="lastname">Lastname</label>
-                                                                    <input type="text" class="form-control form-control" id="lastname" value="<?= $row['lastname'] ?>" name="lastname" placeholder="Last Name">
+                                                                    <input type="text" class="form-control form-control" value="<?= $row['lastname'] ?>" name="lastname" placeholder="Last Name">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="extension">Suffix</label>
@@ -275,7 +275,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 <p class="text-dark small h5">Basic Information</p>
                                                                 <div class="form-group">
                                                                     <label for="dob">Date of Birth</label>
-                                                                    <input type="date" class="form-control form-control" id="dob" value="<?= $row['dob'] ?>" name="dob">
+                                                                    <input type="date" class="form-control form-control" value="<?= $row['dob'] ?>" name="dob">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="age">Age</label>
@@ -283,7 +283,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="pob">Place of Birth</label>
-                                                                    <input type="text" class="form-control form-control" id="pob" value="<?= $row['pob'] ?>" name="pob" placeholder="Place of Birth">
+                                                                    <input type="text" class="form-control form-control" value="<?= $row['pob'] ?>" name="pob" placeholder="Place of Birth">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="civil-status">Civil Status</label>
@@ -298,7 +298,7 @@ if ($_SESSION["type"] == "super_admin") {
 
                                                                 <div class="form-group">
                                                                     <label for="tin">TIN</label>
-                                                                    <input type="text" class="form-control form-control" id="tin" name="tin" aria-describedby="emailHelp" value="<?= $row['tin'] ?>" placeholder="TIN number">
+                                                                    <input type="text" class="form-control form-control" name="tin" aria-describedby="emailHelp" value="<?= $row['tin'] ?>" placeholder="TIN number">
                                                                 </div>
                                                             </div>
 
@@ -306,7 +306,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 <p class="text-dark small h5 mb-6">Contact Information</p>
                                                                 <div class="form-group">
                                                                     <label for="mobile-number">Mobile Number</label>
-                                                                    <input type="text" class="form-control form-control" id="mobile-number" value="<?= $row['mobile_number'] ?>" name="mobile-number" placeholder="First Name">
+                                                                    <input type="text" class="form-control form-control"number" value="<?= $row['mobile_number'] ?>" name="mobile-number" placeholder="First Name">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="email">Email Address</label>
@@ -316,45 +316,38 @@ if ($_SESSION["type"] == "super_admin") {
 
                                                                 <p class="text-dark small h5 mt-3">Address</p>
                                                                 <div class="form-group">
-                                                                    <label for="zone">Zone</label>
-                                                                    <input type="zone" class="form-control form-control" name="zone" value="<?= $row['zone'] ?>" placeholder="Zone (Purok)">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="brgy">Barangay</label>
-                                                                    <input type="text" class="form-control form-control" name="brgy" value="<?= $row['brgy'] ?>" placeholder="Barangay">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="municipality">Municipality</label>
-                                                                    <input type="text" class="form-control form-control" name="municipality" value="<?= $row['municipality'] ?>" placeholder="Municipality">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="province">Province</label>
-                                                                    <input type="text" class="form-control form-control" name="province" value="<?= $row['province'] ?>" placeholder="Province">
-                                                                </div>
-                                                                <div class="form-group">
                                                                     <label for="province">Region</label>
-                                                                    <select id="region" name="region" class="form-control">
-                                                                        <option <?= $row['region'] == "NCR" ? 'selected' : ''  ?> value="NCR">National Capital Region (NCR)</option>
-                                                                        <option <?= $row['region'] == "CAR" ? 'selected' : ''  ?> value="CAR">Cordillera Administrative Region (CAR)</option>
-                                                                        <option <?= $row['region'] == "Region 1" ? 'selected' : ''  ?> value="Region 1">Ilocos Region (Region 1)</option>
-                                                                        <option <?= $row['region'] == "Region 2" ? 'selected' : ''  ?> value="Region 2">Cagayan Valley (Region 2)</option>
-                                                                        <!-- Continue adding options as needed -->
-                                                                        <option <?= $row['region'] == "Region 3" ? 'selected' : ''  ?> value="Region 3">Central Luzon (Region 3)</option>
-                                                                        <option <?= $row['region'] == "Region 4A" ? 'selected' : ''  ?> value="Region 4A">CALABARZON (Region 4A)</option>
-                                                                        <option <?= $row['region'] == "Region 4B" ? 'selected' : ''  ?> value="Region 4B">MIMAROPA (Region 4B)</option>
-                                                                        <option <?= $row['region'] == "Region 5" ? 'selected' : ''  ?> value="Region 5">Bicol Region (Region 5)</option>
-                                                                        <option <?= $row['region'] == "Region 6" ? 'selected' : ''  ?> value="Region 6">Western Visayas (Region 6)</option>
-                                                                        <option <?= $row['region'] == "Region 7" ? 'selected' : ''  ?> value="Region 7">Central Visayas (Region 7)</option>
-                                                                        <option <?= $row['region'] == "Region 8" ? 'selected' : ''  ?> value="Region 8">Eastern Visayas (Region 8)</option>
-                                                                        <option <?= $row['region'] == "Region 9" ? 'selected' : ''  ?> value="Region 9">Zamboanga Peninsula (Region 9)</option>
-                                                                        <option <?= $row['region'] == "Region 10" ? 'selected' : ''  ?> value="Region 10">Northern Mindanao (Region 10)</option>
-                                                                        <option <?= $row['region'] == "Region 11" ? 'selected' : ''  ?> value="Region 11">Davao Region (Region 11)</option>
-                                                                        <option <?= $row['region'] == "Region 12" ? 'selected' : ''  ?> value="Region 12">SOCCSKSARGEN (Region 12)</option>
-                                                                        <option <?= $row['region'] == "CARAGA" ? 'selected' : ''  ?> value="CARAGA">CARAGA</option>
-                                                                        <option <?= $row['region'] == "BARMM" ? 'selected' : ''  ?> value="BARMM">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+                                                                    <select name="region" class="form-control">
+
                                                                     </select>
 
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <label for="province">Province</label>
+                                                                    <!-- <input type="text" class="form-control form-control" name="province" value="<?= $row['province'] ?>" placeholder="Province"> -->
+
+                                                                    <select name="province" class="form-control">
+
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="municipality">Municipality</label>
+                                                                    <!-- <input type="text" class="form-control form-control" name="municipality" value="<?= $row['municipality'] ?>" placeholder="Municipality"> -->
+                                                                    <select name="municipality"  class="form-control"></select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="brgy">Barangay</label>
+                                                                    <!-- <input type="text" class="form-control form-control" name="brgy" value="<?= $row['brgy'] ?>" placeholder="Barangay"> -->
+                                                                    <select name="brgy"  class="form-control"></select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="zone">Zone</label>
+                                                                    <input type="zone" class="form-control form-control" name="zone" value="<?= $row['zone'] ?>" placeholder="Zone (Purok)">
+                                                                </div>
+
+
+
+
                                                             </div>
                                                         </div>
 
@@ -369,7 +362,7 @@ if ($_SESSION["type"] == "super_admin") {
                                     </div>
 
                                     <!-- View Member Modal -->
-                                    <div class="modal fade" id="viewModal<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade view" id="viewModal<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -457,6 +450,10 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 <label for="province">Province</label>
                                                                 <input type="text" readonly class="form-control form-control" name="province" value="<?= $row['province'] ?>" placeholder="Province">
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label for="region">Region</label>
+                                                                <input type="text" readonly class="form-control form-control" name="region" value="<?= $row['region'] ?>" placeholder="region">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -465,7 +462,7 @@ if ($_SESSION["type"] == "super_admin") {
                                     </div>
 
                                     <!-- Delete Member Modal-->
-                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade delete" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">

@@ -13,7 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $recaptchaResponse = $_POST['g-recaptcha-response'];
 
 
-    $secretKey = '6LcAEQIjAAAAAK7yH0mD0wQcBvNmPI-p1E6VQL5z';
+    // $secretKey = '6LcAEQIjAAAAAK7yH0mD0wQcBvNmPI-p1E6VQL5z';
+    $secretKey = '6LdDeiwpAAAAAAAAxXWYfPt1x2zNLfF1ithKWFfC';
     $url = 'https://www.google.com/recaptcha/api/siteverify';
     $data = [
         'secret' => $secretKey,

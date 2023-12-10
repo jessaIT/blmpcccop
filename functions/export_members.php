@@ -20,7 +20,8 @@ if (!$result) {
 
 // Set the CSV header
 header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="members_export.csv"');
+header('Content-Disposition: attachment; filename="members_export_' . date('Ymd_His') . '.csv"');
+
 
 // Create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
