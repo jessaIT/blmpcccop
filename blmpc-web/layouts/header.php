@@ -27,6 +27,8 @@
 
     <link href="assets/css/style.css" rel="stylesheet">
 
+    <script src="./vendor/jquery/jquery.min.js"></script>
+
 </head>
 
 <body>

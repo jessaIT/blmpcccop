@@ -2,8 +2,8 @@
 
 
 <?php
-
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+ 
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["loggedin"] == NULL) {
     header("Location: login.php");
     exit;
 }
@@ -12,7 +12,7 @@ $username = $_SESSION["username"];
 ?>
 
 <?php
-if ($_SESSION["type"] == "super_admin") {
+    if ($_SESSION["type"] == "super_admin") {
 ?>
 
 <?php
@@ -46,16 +46,16 @@ if ($_SESSION["type"] == "super_admin") {
         }
     </script>
 
-    <div class="row col-xl-6 col-md-12 mb-2 align-items-start">
-        <div class="col-1">
+    <div class="d-flex gap-2 mb-4">
+        <div class="col-auto">
             <a class="btn btn-success btn" data-toggle="modal" title="Add new Member (Single Insertion)" data-target="#newMember"><i class="fa-solid fa-plus"></i></a>
         </div>
 
-        <div class="col-1">
+        <div class="col-auto">
             <button class="btn bg-primary text-white border-0 shadow-0" title="Import a CSV file" data-toggle="modal" data-target="#importModal"><i class="fa-solid fa-file-import"></i></button>
         </div>
 
-        <div class="col">
+        <div class="col-auto">
             <button class="btn bg-secondary text-white border-0 shadow-0" title="Download a CSV copy of data">
                 <a href="./functions/export_members.php?type=excel" class="text-white"><i class="fa-solid fa-cloud-arrow-down"></i></a>
             </button>
@@ -132,32 +132,45 @@ if ($_SESSION["type"] == "super_admin") {
                             <tbody>
                                 <?php while ($row = $result->fetch_assoc()) : ?>
                                     <tr>
-                                        <td class="text-center"><b class="text-dark"><?= $row['mem_id'] ?></b></td>
-                                        <td class="text-center"><img src="<?= $row['image_path'] != '' ? "functions/" . $row['image_path'] : 'img/default-avatar.png' ?>" width="50" class="img" alt="Member Image"></td>
-                                        <td class="text-center"><?= $row['lastname'] ?>, <?= $row['firstname'] ?> <?= $row['middlename'] ?></td>
-                                        <td class="text-center"><?= $row['age'] ?></td>
-                                        <td class="text-center"><?= $row['mobile_number'] ?></td>
-                                        <td class="text-center"><?= $row['zone'] ?></td>
-                                        <td class="text-center"><?= $row['brgy'] ?></td>
-                                        <td class="text-center"><?= $row['municipality'] ?></td>
-                                        <td class="text-center"><?= $row['province'] ?></td>
-                                        <td class="text-center">
-                                            <?php
-                                            if ($row['status'] == 'active') {
-                                            ?>
-                                                <div class="btn btn-sm btn-success">Active</div>
-                                            <?php
-                                            } else {
-                                            ?>
-                                                <div class="btn btn-sm btn-danger">Inactive</div>
-                                            <?php
+                                        <td class="text-left">
+                                            <div class="d-flex align-items-center">
+                                                <strong class="text-dark"><?= $row['mem_id'] ?></strong>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            <img src="<?= $row['image_path'] != '' ? "functions/" . $row['image_path'] : 'img/default-avatar.png' ?>" width="50" height="50" class="img-thumbnail" alt="Member Image" style="object-fit: cover;">
+                                        </td>
+                                        <td class="text-left">
+                                            <?= $row['lastname'] ?>, <?= $row['firstname'] ?> <?= $row['middlename'] ?>
+                                        </td>
+                                        <td class="text-left">
+                                            <?= $row['age'] ?>
+                                        </td>
+                                        <td class="text-left">
+                                            <?= $row['mobile_number'] ?>
+                                        </td>
+                                        <td class="text-left">
+                                            <?= $row['zone'] ?>
+                                        </td>
+                                        <td class="text-left">
+                                            <?= $row['brgy'] ?>
+                                        </td>
+                                        <td class="text-left">
+                                            <?= $row['municipality'] ?>
+                                        </td>
+                                        <td class="text-left">
+                                            <?= $row['province'] ?>
+                                        </td>
+                                        <td class="text-left">
 
-                                            }
-                                            ?>
+                                            <div class="btn btn-sm <?= $row['status'] == 'active' ? 'btn-success' : 'btn-danger'; ?>">
+                                                <?= ucfirst($row['status']); ?>
+                                            </div>
+
                                         </td>
-                                        </td>
-                                        <td class="text-center">
-                                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#updateModal<?= $row['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <td class="text-left">
+
+                                            <a class="btn btn-success btn-sm updateMemberBtn" data-toggle="modal" data-target="#updateModal<?= $row['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
 
                                             <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal"><i class="fa-solid fa-trash"></i></a>
 
@@ -190,7 +203,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 <!-- Upload image input-->
                                                                 <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
                                                                     <input id="uploadUp2" name="image" type="file" onchange="readURL2(this);" class="form-control border-0">
-                                                                    <label id="upload-label-up2" for="uploadUp2" class="font-weight-light text-muted">Choose file</label>
+                                                                    <!-- <label id="upload-label-up2" for="uploadUp2" class="font-weight-light text-muted">Choose file</label> -->
                                                                     <div class="input-group-append">
                                                                         <label for="uploadUp" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                                                                     </div>
@@ -306,7 +319,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 <p class="text-dark small h5 mb-6">Contact Information</p>
                                                                 <div class="form-group">
                                                                     <label for="mobile-number">Mobile Number</label>
-                                                                    <input type="text" class="form-control form-control"number" value="<?= $row['mobile_number'] ?>" name="mobile-number" placeholder="First Name">
+                                                                    <input type="text" class="form-control form-control" number" value="<?= $row['mobile_number'] ?>" name="mobile-number" placeholder="First Name">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="email">Email Address</label>
@@ -318,7 +331,7 @@ if ($_SESSION["type"] == "super_admin") {
                                                                 <div class="form-group">
                                                                     <label for="province">Region</label>
                                                                     <select name="region" class="form-control">
-
+                                                                        <option value="<?= $row['region'] ?>"><?= $row['region'] ?></option>
                                                                     </select>
 
                                                                 </div>
@@ -327,18 +340,22 @@ if ($_SESSION["type"] == "super_admin") {
                                                                     <!-- <input type="text" class="form-control form-control" name="province" value="<?= $row['province'] ?>" placeholder="Province"> -->
 
                                                                     <select name="province" class="form-control">
-
+                                                                        <option value="<?= $row['province'] ?>"><?= $row['province'] ?></option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="municipality">Municipality</label>
                                                                     <!-- <input type="text" class="form-control form-control" name="municipality" value="<?= $row['municipality'] ?>" placeholder="Municipality"> -->
-                                                                    <select name="municipality"  class="form-control"></select>
+                                                                    <select name="municipality" class="form-control">
+                                                                        <option value="<?= $row['municipality'] ?>"><?= $row['municipality'] ?></option>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="brgy">Barangay</label>
                                                                     <!-- <input type="text" class="form-control form-control" name="brgy" value="<?= $row['brgy'] ?>" placeholder="Barangay"> -->
-                                                                    <select name="brgy"  class="form-control"></select>
+                                                                    <select name="brgy" class="form-control">
+                                                                        <option value="<?= $row['brgy'] ?>"><?= $row['brgy'] ?></option>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="zone">Zone</label>
@@ -499,30 +516,43 @@ if ($_SESSION["type"] == "super_admin") {
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#dataTable').DataTable();
     });
-</script>
-<script>
+
     function displaySuccessModal(message) {
-        var modal = document.createElement("div");
-        modal.className = "modal";
-        var modalContent = document.createElement("div");
-        modalContent.className = "modal-content";
-        var closeButton = document.createElement("span");
-        closeButton.className = "close";
-        closeButton.innerHTML = "&times;";
-        closeButton.onclick = function() {
-            modal.style.display = "none";
-        };
-        modalContent.appendChild(closeButton);
-        modalContent.innerHTML += "<p>" + message + "</p>";
-        modal.appendChild(modalContent);
-        document.body.appendChild(modal);
-        modal.style.display = "block";
+        // Create a modal dynamically using jQuery and Bootstrap classes
+        var modal = $('<div class="modal" tabindex="-1" role="dialog">');
+        var modalDialog = $('<div class="modal-dialog" role="document">');
+        var modalContent = $('<div class="modal-content">');
+        var modalHeader = $('<div class="modal-header">');
+        var closeButton = $('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+        modalHeader.append(closeButton);
+        modalContent.append(modalHeader);
+        modalContent.append('<div class="modal-body"><p>' + message + '</p></div>');
+
+        // Append the modal content to the modal dialog
+        modalDialog.append(modalContent);
+
+        // Append the modal dialog to the modal
+        modal.append(modalDialog);
+
+        // Append the modal to the body
+        $('body').append(modal);
+
+        // Show the modal
+        modal.modal('show');
+
+        // Remove the modal from the DOM after it is closed
+        modal.on('hidden.bs.modal', function() {
+            modal.remove();
+        });
     }
-    if (typeof successMessage !== "undefined" && successMessage !== "") {
+
+    // Check if successMessage is defined and not empty
+    if (typeof successMessage !== "undefined" && successMessage.trim() !== "") {
         displaySuccessModal(successMessage);
     }
 </script>

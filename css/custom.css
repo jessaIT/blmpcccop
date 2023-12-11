@@ -3,3 +3,9 @@ img {
 }
 
 
+img#imageResult {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    margin: 120px 0;
+}

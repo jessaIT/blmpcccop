@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
 
             if (!empty($_FILES['image']['name'])) {
+
                 $imageFileName = $_FILES['image']['name'];
                 $imageTmpName = $_FILES['image']['tmp_name'];
                 $imageFileType = strtolower(pathinfo($imageFileName, PATHINFO_EXTENSION));
@@ -39,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if (move_uploaded_file($imageTmpName, $imageFile)) {
                         $sql = "INSERT INTO events_tbl(event_name, event_date, event_description, image_path) VALUES('$event_name', '$event_date', '$event_description', '$imageFile')";
                         
-                        if ($conn->query($sql) === TRUE) { 
-                        // if (true) { 
+ 
+                        if ($conn->query($sql) === TRUE) {  
 
                             $serviceAccountFilePath = 'config/googleCalendar.json';
 

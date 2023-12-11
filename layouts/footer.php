@@ -88,7 +88,7 @@
                             <!-- Upload image input-->
                             <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
                                 <input id="upload" name="image" type="file" onchange="readURL(this);" class="form-control border-0">
-                                <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+                                <!-- <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label> -->
                                 <div class="input-group-append">
                                     <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                                 </div>
@@ -206,23 +206,23 @@
                             <p class="text-success h5 mt-3">Address</p>
                             <div class="form-group">
                                 <label for="province">Region</label>
-                                <select name="region" class="form-control">
+                                <select name="region" class="form-control" required>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="province">Province</label>
-                                <!-- <input type="text" class="form-control" name="province" placeholder="Province"> -->
-                                <select name="province" class="form-control"></select>
+                                <!-- <input type="text" class="form-control" required name="province" placeholder="Province"> -->
+                                <select name="province" class="form-control" required></select>
                             </div>
                             <div class="form-group">
                                 <label for="municipality">Municipality</label>
-                                <!-- <input type="text" class="form-control" name="municipality" placeholder="Municipality"> -->
-                                <select class="form-control" name="municipality"></select>
+                                <!-- <input type="text" class="form-control" required name="municipality" placeholder="Municipality"> -->
+                                <select class="form-control" required name="municipality"></select>
                             </div>
                             <div class="form-group">
                                 <label for="brgy">Barangay</label>
-                                <!-- <input type="text" class="form-control" name="brgy" placeholder="Barangay"> -->
-                                <select class="form-control" name="brgy"></select>
+                                <!-- <input type="text" class="form-control" required name="brgy" placeholder="Barangay"> -->
+                                <select class="form-control" required name="brgy"></select>
                             </div>
                             <div class="form-group">
                                 <label for="zone">Zone</label>
@@ -496,10 +496,10 @@
     $(document).ready(function() {
 
         var dob = $('.add_member input[name=dob]');
-        var edit_dob = $('.edit input[name=dob]');
+        var edit_dob = $('.edit.show input[name=dob]');
 
         var age = $('.add_member input[name=age]');
-        var edit_age = $('.edit input[name=age]');
+        var edit_age = $('.edit.show input[name=age]');
 
         dob.on('change', function() {
             calculateAge($(this), age);
@@ -538,12 +538,11 @@
         var jsonData;
 
         // Load JSON data from external file
-        $.getJSON('../blmpccoop/functions/config/address.json', function(data) {
+        $.getJSON('functions/config/address.json', function(data) {
             jsonData = data;
 
-
             // Populate region dropdown
-            populateDropdown('.add_member', 'select[name=region]', Object.keys(jsonData));
+            populateDropdown('.add_member', 'select[name=region]', Object.keys(jsonData), true);
 
             // Handle region change
             $('.add_member select[name="region"]').change(function() {
@@ -581,61 +580,85 @@
                     populateDropdown('.add_member', 'select[name=brgy]', barangays);
                 }
             });
-
-
-            // Populate region dropdown
-            populateDropdown('.edit', 'select[name=region]', Object.keys(jsonData));
-
-            // Handle region change
-            $('.edit select[name="region"]').change(function() {
-                var selectedRegion = $(this).val();
-                var provinces = jsonData[selectedRegion].province_list;
-                populateDropdown('.edit', 'select[name=province]', Object.keys(provinces));
-            });
-
-            // Handle province change
-            $('.edit select[name="province"]').change(function() {
-                var selectedRegion = $('.edit select[name="region"]').val();
-                var selectedProvince = $(this).val();
-                var municipalitiesObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list;
-
-                var municipalities = Object.values(municipalitiesObject).map(obj => Object.keys(obj)[0]);
-
-                console.log(municipalities);
-
-                populateDropdown('.edit', 'select[name=municipality]', municipalities);
-            });
-
-            // Handle municipality change
-            $('.edit select[name="municipality"]').change(function() {
-                var selectedRegion = $('.edit select[name="region"]').val();
-                var selectedProvince = $('.edit select[name="province"]').val();
-                var selectedMunicipality = $(this).val();
-
-                // Find the municipality object in the array
-                var municipalityObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list.find(obj => Object.keys(obj)[0] === selectedMunicipality);
-
-                if (municipalityObject) {
-                    var barangays = municipalityObject[selectedMunicipality].barangay_list;
-
-                    // Populate barangay dropdown
-                    populateDropdown('.edit', 'select[name=brgy]', barangays);
-                }
-            });
         });
 
-        // Function to populate a dropdown
-        function populateDropdown(parentElement, dropdownElement, values) {
-            var dropdown = $(parentElement + ' ' + dropdownElement);
 
-            dropdown.empty();
 
-            $.each(values, function(index, value) {
-                dropdown.append('<option value="' + value + '">' + value + '</option>');
-            });
-        }
+
+
+        $(document).on('click', '.updateMemberBtn', function() {
+
+
+            var $modal = $(this).data('target');
+
+            $.getJSON('functions/config/address.json', function(data) {
+
+                jsonData = data;
+
+                // populateDropdown(false, $modal + ' select[name=region]', Object.keys(jsonData));
+
+                // Handle region change
+                $(document).on('change', $modal + ' select[name="region"]', function() {
+                    var selectedRegion = $(this).val();
+
+                    // console.log(selectedRegion);
+
+                    var provinces = jsonData[selectedRegion].province_list;
+
+                    // console.log(provinces);
+
+                    populateDropdown(false, $modal + ' select[name=province]', Object.keys(provinces));
+                });
+
+                // Handle province change
+                $($modal + ' select[name="province"]').change(function() {
+                    var selectedRegion = $($modal + ' select[name="region"]').val();
+                    var selectedProvince = $(this).val();
+
+                    var municipalitiesObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list;
+                    var municipalities = Object.values(municipalitiesObject).map(obj => Object.keys(obj)[0]);
+
+                    populateDropdown(false, $modal + ' select[name=municipality]', municipalities);
+                });
+
+                // Handle municipality change
+                $($modal + ' select[name="municipality"]').change(function() {
+                    var selectedRegion = $($modal + ' select[name="region"]').val();
+                    var selectedProvince = $($modal + ' select[name="province"]').val();
+                    var selectedMunicipality = $(this).val();
+
+                    // $ the municipality object in the array
+                    var municipalityObject = jsonData[selectedRegion].province_list[selectedProvince].municipality_list.find(obj => Object.keys(obj)[0] === selectedMunicipality);
+
+                    if (municipalityObject) {
+                        var barangays = municipalityObject[selectedMunicipality].barangay_list;
+
+                        // Populate barangay dropdown
+                        populateDropdown(false, $modal + ' select[name=brgy]', barangays);
+                    }
+                });
+            })
+        });
+
+
 
     });
+
+
+    // Function to populate a dropdown
+    function populateDropdown(parentElement = false, dropdownElement, values, empty = false) {
+        var dropdown = $(parentElement ? parentElement + ' ' + dropdownElement : dropdownElement);
+
+        if(!empty){
+            dropdown.empty();
+        }
+
+        dropdown.append("<option value=''>Select</option>");
+
+        $.each(values, function(index, value) {
+            dropdown.append('<option value="' + value + '">' + value + '</option>');
+        });
+    }
 </script>
 </body>
 

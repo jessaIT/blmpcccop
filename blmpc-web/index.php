@@ -2,7 +2,7 @@
   <header id="header" class="fixed-top bg-success">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html"><img src="assets/img/logo.png" alt="./"></a></h1>
+      <h1 class="logo me-auto"><a href="index.php"><img src="assets/img/logo.png" alt="./"></a></h1>
 
       <nav id="navbar" class="navbar">
         <ul>
